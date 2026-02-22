@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-
+import { Inter } from "next/font/google";
 import "./globals.css";
 import {
   ClerkProvider,
@@ -25,14 +25,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      signInFallbackRedirectUrl="/feed"
+      signUpFallbackRedirectUrl="/feed"
+      signInForceRedirectUrl="/feed"
+      signUpForceRedirectUrl="/feed"
+    >
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased pt-5`}
         >
           <Navbar />
-          <main className="min-h-screen pb-16 md:pb-0 pt-0 md:pt-16 pb-safe">
-            {children}
+          <main className="min-h-screen pb-16 md:pb-0 pt-0 md:pt-16">
+            <div className="max-w-7xl mx-auto">{children}</div>
           </main>
           <Footer />
         </body>

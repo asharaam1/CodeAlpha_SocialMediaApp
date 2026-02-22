@@ -117,6 +117,13 @@ export default function Navbar() {
                   <FiSearch className="w-5 h-5" />
                   <span className="font-medium">Explore</span>
                 </Link>
+                <Link
+                  href="/profile"
+                  className={`flex items-center space-x-2 ${pathname === "/explore" ? "text-blue-500" : "text-gray-600 hover:text-blue-500"}`}
+                >
+                  <FiUser className="w-5 h-5" />
+                  <span className="font-medium">Profile</span>
+                </Link>
 
                 {/* Create Post Button */}
                 <div className="relative">
@@ -209,7 +216,37 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Bottom Navigation (Instagram Style) */}
+      {/* Mobile Navbar (Hamburger Menu) */}
+      <SignedOut>
+        <nav className="md:hidden fixed top-0 left-0 right-0 bg-white shadow-sm z-50 border-b border-gray-200">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-center h-16">
+              {/* Logo */}
+              <Link href="/">
+                <Image
+                  src="/byteBond.png"
+                  alt="ByteBond Logo"
+                  width={50}
+                  height={50}
+                  className="object-contain"
+                />
+              </Link>
+              {/* Hamburger Menu */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                {mobileMenuOpen ? (
+                  <FiX className="w-6 h-6" />
+                ) : (
+                  <FiMenu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+          </div>
+        </nav>
+      </SignedOut>
+      {/* Mobile Bottom Navigation */}
       <SignedIn>
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
           <div className="flex justify-around items-center h-16">
@@ -237,12 +274,57 @@ export default function Navbar() {
         </nav>
       </SignedIn>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={() => setMobileMenuOpen(false)}
-        />
+        <div className="md:hidden fixed top-16 left-0 right-0 bg-white shadow-md z-50 border-b border-gray-200">
+          <div className="flex flex-col p-4 space-y-4">
+            {/* Signed In Links */}
+            <SignedIn>
+              <Link
+                href="/feed"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-gray-700"
+              >
+                Feed
+              </Link>
+              <Link
+                href="/explore"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-gray-700"
+              >
+                Explore
+              </Link>
+              <Link
+                href="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-gray-700"
+              >
+                Profile
+              </Link>
+            </SignedIn>
+
+            {/* Signed Out Buttons */}
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full px-4 py-2 text-blue-500 border border-blue-500 rounded-lg"
+                >
+                  Sign In
+                </button>
+              </SignInButton>
+
+              <SignUpButton mode="modal">
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg"
+                >
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+          </div>
+        </div>
       )}
 
       {/* Create Post Modal for Mobile */}
