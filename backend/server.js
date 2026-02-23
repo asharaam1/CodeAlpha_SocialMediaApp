@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 // Import configs
 import connectDB from "./config/database.js";
 import connectCloudinary from "./config/cloudinary.js";
+import webhookRoutes from "./routes/webhooks.js";
 
 // Load environment variables
 dotenv.config();
@@ -54,6 +55,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+// ✅ Webhook route - NO AUTH MIDDLEWARE
+app.use("/api/webhooks", webhookRoutes);
+
 app.get("/", (req, res) => {
   res.json({
     message: "ByteBond API is running!",
