@@ -1,7 +1,6 @@
 import { verifyWebhook } from "@clerk/express/webhooks";
-import express from "express";
+import express, { Router } from "express";
 import { createOrUpdateUser, deleteUser } from "../controllers/user.js";
-import { Router } from "express";
 
 const router = Router();
 
@@ -12,8 +11,6 @@ router.post(
     try {
       const evt = await verifyWebhook(req);
 
-      // Do something with payload
-      // For this guide, log payload to console
       const { id } = evt.data;
       const eventType = evt.type;
 
@@ -23,7 +20,6 @@ router.post(
       console.log("Webhook payload:", evt.data);
 
       if (eventType === "user.created" || eventType === "user.updated") {
-        // Handle user creation event
         const {
           id,
           first_name,
@@ -31,7 +27,8 @@ router.post(
           image_url,
           email_addresses,
           username,
-        } = evt?.data;
+        } = evt.data;
+
         try {
           await createOrUpdateUser(
             id,
@@ -49,8 +46,7 @@ router.post(
       }
 
       if (eventType === "user.deleted") {
-        // Handle user deletion event
-        const { id } = evt?.data;
+        const { id } = evt.data;
         try {
           await deleteUser(id);
           return res.status(200).send("User deleted successfully");
@@ -60,7 +56,7 @@ router.post(
         }
       }
 
-      return res.send("Webhook received");
+      return res.status(200).send("Webhook received");
     } catch (err) {
       console.error("Error verifying webhook:", err);
       return res.status(400).send("Error verifying webhook");
