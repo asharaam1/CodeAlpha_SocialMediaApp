@@ -4,14 +4,28 @@ import dotenv from "dotenv";
 import http from "http";
 import { Server } from "socket.io"; // ✅ correct import
 import mongoose from "mongoose";
-
-// Load environment variables
-dotenv.config();
-
 // Import configs
 import connectDB from "./config/database.js";
 import connectCloudinary from "./config/cloudinary.js";
 
+// Load environment variables
+dotenv.config();
+
+console.log("🔍 RAW process.env check:");
+console.log("All keys:", Object.keys(process.env));
+console.log(
+  "MONGODB_URI exists?",
+  process.env.MONGODB_URI ? "✅ YES" : "❌ NO",
+);
+console.log(
+  "MONGODB_URI value:",
+  process.env.MONGODB_URI ? "hidden" : "undefined",
+);
+console.log(
+  "CLOUDINARY_CLOUD_NAME exists?",
+  process.env.CLOUDINARY_CLOUD_NAME ? "✅ YES" : "❌ NO",
+);
+console.log("NODE_ENV:", process.env.NODE_ENV);
 // Connect to MongoDB Atlas
 connectDB();
 
