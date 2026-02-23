@@ -1,6 +1,5 @@
-import User from "../models/User";
-
-import { connectDB } from "../config/database";
+import User from "../models/User.js";
+import connectDB from "../config/database.js";
 
 export const createOrUpdateUser = async (
   id,
