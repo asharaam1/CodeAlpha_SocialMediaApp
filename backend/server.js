@@ -44,6 +44,9 @@ const io = new Server(server, {
   },
 });
 
+// ✅ Webhook route - NO AUTH MIDDLEWARE
+app.use("/api/webhooks", webhookRoutes);
+
 // Middleware
 app.use(
   cors({
@@ -51,8 +54,6 @@ app.use(
     credentials: true,
   }),
 );
-// ✅ Webhook route - NO AUTH MIDDLEWARE
-app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
