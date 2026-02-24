@@ -51,12 +51,12 @@ app.use(
     credentials: true,
   }),
 );
+// ✅ Webhook route - NO AUTH MIDDLEWARE
+app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-// ✅ Webhook route - NO AUTH MIDDLEWARE
-app.use("/api/webhooks", webhookRoutes);
 
 app.get("/", (req, res) => {
   res.json({
